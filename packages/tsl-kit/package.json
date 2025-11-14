@@ -19,7 +19,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/three": "^0.168.2",
+    "@types/three": "^0.181.0",
     "typescript": "^5.4.5"
   }
 }
