@@ -1,0 +1,25 @@
+{
+  "name": "@tsl-kit/engine",
+  "version": "0.1.0",
+  "description": "TSL Kit WebGPU engine scaffolding",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -w -p tsconfig.build.json",
+    "lint": "echo 'lint not yet configured for @tsl-kit/engine'",
+    "test": "echo 'tests not yet implemented for @tsl-kit/engine'"
+  },
+  "dependencies": {
+    "three": "^0.181.0",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/three": "^0.168.2",
+    "typescript": "^5.4.5"
+  }
+}
