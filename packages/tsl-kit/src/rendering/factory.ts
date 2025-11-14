@@ -97,37 +97,12 @@ function createWebGLRenderer(options: RendererOptions): THREE.WebGLRenderer {
 
 /**
  * Create a WebGPU renderer
+ * NOTE: WebGPU support will be added in Phase 3 with proper three/webgpu integration
  */
 async function createWebGPURenderer(options: RendererOptions): Promise<any> {
-  try {
-    // Dynamically import WebGPURenderer
-    const WebGPURenderer = (THREE as any).WebGPURenderer;
-    
-    if (!WebGPURenderer) {
-      throw new Error('WebGPURenderer not available in Three.js');
-    }
-
-    const renderer = new WebGPURenderer({
-      canvas: options.canvas,
-      antialias: options.antialias ?? true,
-      alpha: options.alpha ?? false,
-      powerPreference: options.powerPreference || 'high-performance',
-    });
-
-    // WebGPU requires async initialization
-    await renderer.init();
-
-    // Configure renderer
-    (renderer as any).toneMapping = THREE.ACESFilmicToneMapping;
-    (renderer as any).toneMappingExposure = 1.0;
-
-    console.log('✅ WebGPU renderer initialized');
-
-    return renderer;
-  } catch (error) {
-    console.warn('⚠️ WebGPU initialization failed:', error);
-    throw error;
-  }
+  // For Phase 2, WebGPU is not fully integrated yet
+  // This will be properly implemented in Phase 3 with three/webgpu
+  throw new Error('WebGPU not yet implemented - falling back to WebGL');
 }
 
 /**
