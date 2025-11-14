@@ -1,3 +1,3 @@
-// Module exports - TODO: Add modules in Phase 2 and 3
-export {};
+// Module exports
+export { default as helloCubeModule } from './test/HelloCube';
 

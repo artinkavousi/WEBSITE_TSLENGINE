@@ -17,6 +17,9 @@ export interface ModuleEvents {
   invalidate: () => void;
   onPresetSave?: (name: string, data: unknown) => void;
   onPresetLoad?: (name: string, data: unknown) => void;
+  onModuleLoad?: (id: string) => void;
+  onModuleUnload?: (id: string) => void;
+  onModuleError?: (id: string, error: Error) => void;
 }
 
 export interface RendererCapabilities {

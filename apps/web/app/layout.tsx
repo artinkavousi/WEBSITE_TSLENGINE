@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import dynamic from 'next/dynamic';
+
+const PersistentCanvas = dynamic(() => import('@/components/PersistentCanvas'), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: 'TSL-KIT Engine',
@@ -13,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PersistentCanvas />
+        <div className="relative z-10">{children}</div>
+      </body>
     </html>
   );
 }
