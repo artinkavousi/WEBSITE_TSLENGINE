@@ -65,11 +65,13 @@ export interface EngineModule<TParams = any> {
   dispose?(ctx: ModuleContext): void;
 }
 
-export enum ModuleState {
-  Unloaded = 'unloaded',
-  Loading = 'loading',
-  Loaded = 'loaded',
-  Mounted = 'mounted',
-  Error = 'error',
-}
+export const ModuleState = {
+  Unloaded: 'unloaded',
+  Loading: 'loading',
+  Loaded: 'loaded',
+  Mounted: 'mounted',
+  Error: 'error',
+} as const;
+
+export type ModuleState = (typeof ModuleState)[keyof typeof ModuleState];
 
