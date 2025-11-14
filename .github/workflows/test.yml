@@ -1,0 +1,48 @@
+name: Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9.15.0
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      
+      - run: pnpm install --frozen-lockfile
+      
+      - run: pnpm test:unit
+
+  # E2E tests will be added in Phase 2
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 9.15.0
+  #     
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #         cache: 'pnpm'
+  #     
+  #     - run: pnpm install --frozen-lockfile
+  #     
+  #     - run: pnpm playwright install --with-deps
+  #     
+  #     - run: pnpm test:e2e
+
