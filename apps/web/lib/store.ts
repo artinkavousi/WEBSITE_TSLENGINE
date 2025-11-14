@@ -58,7 +58,7 @@ export const useEngineStore = create<EngineStore>()(
     persist(
       (set, get) => ({
         // Initial state
-        backend: 'auto',
+        backend: 'webgpu', // Explicitly use WebGPU
         fpsCap: 60,
         activeModuleId: null,
         moduleParams: {},

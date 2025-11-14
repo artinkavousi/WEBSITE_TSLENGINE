@@ -7,11 +7,11 @@ const nextConfig = {
       'bufferutil': 'commonjs bufferutil',
     });
     
-    // Handle three/webgpu optional import
+    // WebGPU support - ensure proper module resolution
     if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        'three/webgpu': false,
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'three/webgpu': 'three/examples/jsm/renderers/webgpu/WebGPURenderer.js',
       };
     }
     

@@ -1,6 +1,9 @@
-// Renderer factory - WebGPU/WebGL with automatic fallback
+// Renderer factory - WebGPU with automatic fallback
 import * as THREE from 'three';
 import type { RendererCapabilities } from '../core/types';
+
+// WebGPU renderer type (typed as any until proper types are available)
+export type WebGPURenderer = any;
 
 export interface RendererOptions {
   canvas?: HTMLCanvasElement;
@@ -11,7 +14,7 @@ export interface RendererOptions {
 }
 
 export interface RendererResult {
-  renderer: THREE.WebGLRenderer | any; // WebGPURenderer when available
+  renderer: WebGPURenderer | THREE.WebGLRenderer;
   capabilities: RendererCapabilities;
 }
 
@@ -19,7 +22,7 @@ export interface RendererResult {
  * Detect renderer capabilities
  */
 export async function detectCapabilities(
-  renderer: THREE.WebGLRenderer | any
+  renderer: WebGPURenderer | THREE.WebGLRenderer
 ): Promise<RendererCapabilities> {
   const isWebGPU = renderer.backend !== undefined;
 
@@ -75,7 +78,69 @@ export async function detectCapabilities(
 }
 
 /**
- * Create a WebGL renderer
+ * Create a WebGPU renderer using Three.js r181+
+ */
+async function createWebGPURenderer(options: RendererOptions): Promise<WebGPURenderer> {
+  try {
+    // Check WebGPU availability
+    if (!(navigator as any)?.gpu) {
+      throw new Error('WebGPU not supported in this browser');
+    }
+
+    // Try multiple import paths for Three.js WebGPU renderer
+    let WebGPURendererClass;
+    
+    try {
+      // Try three/addons path (standard for r181+)
+      // @ts-ignore - Dynamic import path
+      const module1 = await import('three/addons/renderers/webgpu/WebGPURenderer.js');
+      WebGPURendererClass = (module1 as any).default || (module1 as any).WebGPURenderer;
+    } catch (e1) {
+      try {
+        // Try three/webgpu path
+        // @ts-ignore - Dynamic import path
+        const module2 = await import('three/webgpu');
+        WebGPURendererClass = (module2 as any).default || (module2 as any).WebGPURenderer;
+      } catch (e2) {
+        try {
+          // Try direct three package export
+          const module3 = await import('three');
+          WebGPURendererClass = (module3 as any).WebGPURenderer;
+        } catch (e3) {
+          throw new Error(`Could not import WebGPURenderer from any known path. Errors: ${e1}, ${e2}, ${e3}`);
+        }
+      }
+    }
+
+    if (!WebGPURendererClass) {
+      throw new Error('WebGPURenderer class not found in any module');
+    }
+
+    const renderer = new WebGPURendererClass({
+      canvas: options.canvas,
+      antialias: options.antialias ?? true,
+      alpha: options.alpha ?? false,
+      powerPreference: options.powerPreference || 'high-performance',
+    });
+
+    // WebGPU requires async initialization
+    await renderer.init();
+
+    // Configure renderer
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+
+    console.log('✅ WebGPU renderer initialized');
+
+    return renderer;
+  } catch (error) {
+    console.error('❌ WebGPU initialization failed:', error);
+    throw error;
+  }
+}
+
+/**
+ * Create a WebGL renderer (fallback)
  */
 function createWebGLRenderer(options: RendererOptions): THREE.WebGLRenderer {
   const renderer = new THREE.WebGLRenderer({
@@ -90,41 +155,29 @@ function createWebGLRenderer(options: RendererOptions): THREE.WebGLRenderer {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
 
-  console.log('✅ WebGL renderer initialized');
+  console.log('✅ WebGL renderer initialized (fallback)');
 
   return renderer;
 }
 
 /**
- * Create a WebGPU renderer
- * NOTE: WebGPU support will be added in Phase 3 with proper three/webgpu integration
- */
-async function createWebGPURenderer(options: RendererOptions): Promise<any> {
-  // For Phase 2, WebGPU is not fully integrated yet
-  // This will be properly implemented in Phase 3 with three/webgpu
-  throw new Error('WebGPU not yet implemented - falling back to WebGL');
-}
-
-/**
- * Create a renderer with automatic WebGPU/WebGL fallback
+ * Create a renderer - WebGPU first, WebGL fallback
  * @param options - Renderer configuration options
  * @returns Renderer instance and capabilities
  */
 export async function createRenderer(
   options: RendererOptions = {}
 ): Promise<RendererResult> {
-  let renderer: THREE.WebGLRenderer | any;
+  let renderer: WebGPURenderer | THREE.WebGLRenderer;
 
-  // Determine which backend to use
-  const useWebGPU =
-    options.forceBackend === 'webgpu' ||
-    (options.forceBackend !== 'webgl' && (navigator as any)?.gpu);
+  // Force WebGPU unless explicitly set to WebGL
+  const useWebGPU = options.forceBackend !== 'webgl';
 
   if (useWebGPU) {
     try {
       renderer = await createWebGPURenderer(options);
     } catch (error) {
-      console.warn('⚠️ WebGPU failed, falling back to WebGL:', error);
+      console.warn('⚠️ WebGPU unavailable, falling back to WebGL');
       renderer = createWebGLRenderer(options);
     }
   } else {
@@ -145,4 +198,3 @@ export async function createRenderer(
 export function isWebGPUAvailable(): boolean {
   return !!(navigator as any)?.gpu;
 }
-

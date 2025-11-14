@@ -4,7 +4,20 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Stats } from '@react-three/drei';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { createRenderer, ModuleRunner } from '@tsl-kit/engine';
+import { createRenderer, ModuleRunner, moduleRegistry } from '@tsl-kit/engine';
+import { 
+  helloCubeModule,
+  pbrMaterialModule,
+  emissiveMaterialModule,
+  iridescentMaterialModule,
+  simplexNoiseModule,
+  curlNoiseModule,
+  voronoiNoiseModule,
+  fbmNoiseModule,
+  bloomEffectModule,
+  vignetteEffectModule,
+  chromaticAberrationModule,
+} from '@tsl-kit/engine';
 import { useEngineStore } from '@/lib/store';
 
 function Scene() {
@@ -18,6 +31,37 @@ function Scene() {
   const backend = useEngineStore((state) => state.backend);
   const getParam = useEngineStore((state) => state.getParam);
   const setParam = useEngineStore((state) => state.setParam);
+  const setBackend = useEngineStore((state) => state.setBackend);
+  const selectModule = useEngineStore((state) => state.selectModule);
+
+  // Register all modules once
+  useEffect(() => {
+    // Register test modules
+    moduleRegistry.register(helloCubeModule);
+    
+    // Register material modules
+    moduleRegistry.register(pbrMaterialModule);
+    moduleRegistry.register(emissiveMaterialModule);
+    moduleRegistry.register(iridescentMaterialModule);
+    
+    // Register noise modules
+    moduleRegistry.register(simplexNoiseModule);
+    moduleRegistry.register(curlNoiseModule);
+    moduleRegistry.register(voronoiNoiseModule);
+    moduleRegistry.register(fbmNoiseModule);
+    
+    // Register post-fx modules
+    moduleRegistry.register(bloomEffectModule);
+    moduleRegistry.register(vignetteEffectModule);
+    moduleRegistry.register(chromaticAberrationModule);
+
+    console.log(`✅ Registered ${moduleRegistry.size} modules`);
+
+    // Load default module if none active
+    if (!activeModuleId) {
+      selectModule('test/hello-cube', helloCubeModule.defaultParams);
+    }
+  }, []);
 
   // Initialize renderer and runner
   useEffect(() => {
@@ -41,6 +85,9 @@ function Scene() {
         }
 
         rendererRef.current = renderer;
+        
+        // Update store with detected backend
+        setBackend(capabilities.backend);
 
         // Create module runner
         const runner = new ModuleRunner(
@@ -78,7 +125,7 @@ function Scene() {
         rendererRef.current.dispose();
       }
     };
-  }, [backend]);
+  }, [backend, setBackend]);
 
   // Load/unload modules
   useEffect(() => {
@@ -150,13 +197,6 @@ function Scene() {
 
       {/* Grid helper */}
       <gridHelper args={[20, 20]} />
-      
-      {!activeModuleId && (
-        <mesh>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="hotpink" />
-        </mesh>
-      )}
     </>
   );
 }
