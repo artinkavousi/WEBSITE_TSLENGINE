@@ -10,3 +10,4 @@ coverage
 .vscode
 .idea
 pnpm-lock.yaml
+.turbo
