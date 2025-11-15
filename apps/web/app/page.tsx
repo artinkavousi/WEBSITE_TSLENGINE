@@ -11,6 +11,9 @@ import ModuleShowcase from "../components/ModuleShowcase";
 import AdoptionSpotlight from "../components/AdoptionSpotlight";
 import OperationsPlaybooks from "../components/OperationsPlaybooks";
 import SecurityPosture from "../components/SecurityPosture";
+import ComplianceMatrix from "../components/ComplianceMatrix";
+import EnablementPrograms from "../components/EnablementPrograms";
+import PartnerEcosystem from "../components/PartnerEcosystem";
 import Roadmap from "../components/Roadmap";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
@@ -32,7 +35,10 @@ export default function HomePage() {
           <AIAssistants />
           <OperationsPlaybooks />
           <SecurityPosture />
+          <ComplianceMatrix />
           <AdoptionSpotlight />
+          <EnablementPrograms />
+          <PartnerEcosystem />
           <Roadmap />
           <LaunchChecklist />
           <FAQ />

@@ -9,7 +9,10 @@ export default function SiteFooter() {
         <nav className="footer__nav" aria-label="Footer navigation">
           <a href="#architecture">Architecture</a>
           <a href="#modules">Modules</a>
+          <a href="#compliance">Compliance</a>
           <a href="#roadmap">Roadmap</a>
+          <a href="#enablement">Enablement</a>
+          <a href="#partners">Partners</a>
           <a href="#collaborate">Collaborate</a>
         </nav>
       </div>

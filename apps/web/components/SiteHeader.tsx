@@ -7,7 +7,10 @@ export default function SiteHeader() {
     { href: "#integrations", label: "Integrations" },
     { href: "#operations", label: "Operations" },
     { href: "#security", label: "Security" },
+    { href: "#compliance", label: "Compliance" },
     { href: "#adoption", label: "Adoption" },
+    { href: "#enablement", label: "Enablement" },
+    { href: "#partners", label: "Partners" },
     { href: "#roadmap", label: "Roadmap" },
     { href: "#faq", label: "FAQ" },
   ];
