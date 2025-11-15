@@ -398,6 +398,15 @@ a:focus {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
+.labs-empty {
+  margin: 0;
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px dashed rgba(82, 212, 192, 0.45);
+  background: rgba(12, 17, 26, 0.4);
+  color: rgba(242, 245, 248, 0.7);
+}
+
 .lab-card {
   position: relative;
   padding: 1.75rem 1.75rem 2.5rem;
@@ -437,6 +446,26 @@ a:focus {
   color: rgba(242, 245, 248, 0.72);
 }
 
+.lab-card__meta {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(242, 245, 248, 0.65);
+}
+
+.lab-card__meta div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lab-card__meta dt {
+  font-weight: 600;
+}
+
+.lab-card__meta dd {
+  margin: 0;
+}
+
 .lab-card__link {
   margin-top: auto;
   font-weight: 600;
@@ -446,6 +475,12 @@ a:focus {
 .lab-card__link:hover,
 .lab-card__link:focus-visible {
   text-decoration: underline;
+}
+
+.labs-cta {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .layers {
@@ -1319,6 +1354,212 @@ a:focus {
   font-size: 0.85rem;
 }
 
+.labs-index {
+  padding: 6rem clamp(1.5rem, 4vw, 4rem) clamp(3rem, 5vw, 6rem);
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(82, 212, 192, 0.12), transparent 55%),
+    linear-gradient(180deg, rgba(12, 17, 26, 0.95) 0%, rgba(7, 9, 15, 0.96) 100%);
+  color: #f2f5f8;
+}
+
+.labs-index__header {
+  max-width: 780px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.labs-index__header h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+}
+
+.labs-index__header p {
+  margin: 0;
+  color: rgba(242, 245, 248, 0.7);
+}
+
+.labs-index__grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.labs-index__card {
+  padding: 2rem;
+  border-radius: 22px;
+  background: rgba(13, 18, 26, 0.85);
+  border: 1px solid rgba(80, 115, 255, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.labs-index__card h2 {
+  margin: 0.5rem 0 0;
+  font-size: 1.6rem;
+}
+
+.labs-index__card h2 a {
+  color: inherit;
+}
+
+.labs-index__card h2 a:hover,
+.labs-index__card h2 a:focus-visible {
+  color: rgba(82, 212, 192, 0.95);
+}
+
+.labs-index__card p {
+  margin: 0;
+  color: rgba(242, 245, 248, 0.75);
+}
+
+.labs-index__meta {
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.labs-index__meta dt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(242, 245, 248, 0.55);
+}
+
+.labs-index__meta dd {
+  margin: 0;
+  font-weight: 600;
+  color: rgba(242, 245, 248, 0.85);
+}
+
+.labs-index__tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.labs-index__tags li {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(80, 115, 255, 0.18);
+  border: 1px solid rgba(80, 115, 255, 0.28);
+  font-size: 0.8rem;
+}
+
+.lab-detail {
+  padding: 6rem clamp(1.5rem, 4vw, 4rem) clamp(4rem, 6vw, 7rem);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: radial-gradient(circle at top left, rgba(82, 212, 192, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(7, 9, 15, 0.96) 0%, rgba(9, 11, 18, 0.98) 100%);
+  color: #f2f5f8;
+}
+
+.lab-detail__breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(242, 245, 248, 0.65);
+}
+
+.lab-detail__breadcrumbs a {
+  color: inherit;
+}
+
+.lab-detail__breadcrumbs a:hover,
+.lab-detail__breadcrumbs a:focus-visible {
+  color: rgba(82, 212, 192, 0.95);
+}
+
+.lab-detail__header h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+}
+
+.lab-detail__header p {
+  margin: 0;
+  color: rgba(242, 245, 248, 0.75);
+}
+
+.lab-detail__meta {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.lab-detail__meta div {
+  padding: 1.1rem 1.25rem;
+  border-radius: 16px;
+  background: rgba(13, 18, 26, 0.85);
+  border: 1px solid rgba(80, 115, 255, 0.18);
+}
+
+.lab-detail__meta dt {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 245, 248, 0.55);
+}
+
+.lab-detail__meta dd {
+  margin: 0;
+  font-weight: 600;
+  color: rgba(242, 245, 248, 0.88);
+}
+
+.lab-detail__footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.mdx-content {
+  display: grid;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(242, 245, 248, 0.82);
+}
+
+.mdx-content h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+}
+
+.mdx-content p {
+  margin: 0;
+}
+
+.mdx-content ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mdx-pre {
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: rgba(9, 12, 18, 0.92);
+  border: 1px solid rgba(82, 212, 192, 0.2);
+  overflow-x: auto;
+}
+
+.mdx-code {
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 0.95rem;
+  color: rgba(180, 225, 255, 0.95);
+}
+
 @media (max-width: 768px) {
   .header__inner {
     flex-direction: column;
@@ -1388,5 +1629,23 @@ a:focus {
   .partners-grid,
   .partner-metrics {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .labs-index {
+    padding-top: 5rem;
+  }
+
+  .labs-index__header {
+    text-align: left;
+  }
+
+  .lab-detail {
+    padding-top: 5rem;
+  }
+
+  .lab-detail__footer {
+    flex-direction: column;
   }
 }

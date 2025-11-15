@@ -11,3 +11,4 @@ coverage
 .idea
 pnpm-lock.yaml
 .turbo
+.contentlayer

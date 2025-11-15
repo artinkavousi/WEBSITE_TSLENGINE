@@ -1,0 +1,49 @@
+---
+title: "Particle Anvil"
+summary: "Visual scripting for particle emitters with timeline scrubbing, presets, and render passes."
+status: "Alpha"
+templateId: "lab.particle-anvil"
+styleTokens:
+  - "panel:plasma"
+  - "accent:ember"
+  - "bg:launchpad"
+modulePresets:
+  - "particle-emitters/v3"
+  - "timeline-scrubber/alpha"
+  - "render-passes/deferred"
+featured: true
+homeOrder: 3
+tags:
+  - "Particles"
+  - "Visual Scripting"
+  - "Authoring"
+seoTitle: "Particle Anvil Lab — Visual Scripting for Emitters"
+seoDescription: "Prototype visual scripting flows and render pass orchestration inside the Particle Anvil lab for Website v1.1."
+---
+
+## Overview
+
+Particle Anvil demonstrates how the Website v1.1 control tower streamlines emitter orchestration.
+Teams can drag nodes, animate parameters on the collaborative timeline, and view render passes in
+parallel while the AI assistant suggests presets gathered from partner deployments.
+
+```tsx
+const anvil = engine.modules.create("particle-emitters", {
+  preset: "particle-emitters/v3",
+  timeline: "collaborative",
+});
+
+anvil.timeline.scrub(42);
+anvil.renderPasses.attach("deferred");
+```
+
+## Rituals
+
+- **Timeline retrospectives** — annotate emitter decisions with enablement templates for faster onboarding.
+- **Render audits** — compare forward and deferred passes while the observability spine tracks budget drift.
+- **AI pairing** — ask the copilot for parameter nudges sourced from previous lab experiments.
+
+## Field Notes
+
+The lab pushes the runtime's streaming material compiler, so expect the roadmap to highlight ongoing
+work on GPU memory compaction and AI-led preset hygiene for large emitter libraries.

@@ -1,0 +1,55 @@
+---
+title: "Nebula Cloth"
+summary: "Real-time GPU cloth solver showcasing constraint lattices, ripstop shaders, and wind tunnels."
+status: "Live"
+templateId: "lab.nebula-cloth"
+styleTokens:
+  - "panel:nebula"
+  - "accent:plasma"
+  - "bg:orbit-night"
+modulePresets:
+  - "cloth-solver/v1"
+  - "wind-tunnel/research"
+  - "telemetry/runtime-insights"
+featured: true
+homeOrder: 1
+tags:
+  - "WebGPU"
+  - "Simulation"
+  - "Constraint Systems"
+seoTitle: "Nebula Cloth Lab — WebGPU Cloth Simulation"
+seoDescription: "Walk through the Nebula Cloth lab to customise constraint lattices, wind tunnels, and ripstop shaders running on the Website v1.1 engine."
+---
+
+## Overview
+
+The Nebula Cloth lab lifts the guardrails described in the control tower playbooks to show how the
+Website v1.1 canvas manages high-frequency constraint solving without losing composability. The
+preset loads a pre-authored lattice with configurable anchors so you can play through different
+materials while the engine continues to stream telemetry into the ops HUD.
+
+```ts
+const cloth = engine.modules.create("cloth-solver", {
+  preset: "cloth-solver/v1",
+  damping: 0.18,
+  iterations: 24,
+});
+
+cloth.applyWindField({
+  tunnel: "research",
+  strength: 1.4,
+  turbulence: 0.62,
+});
+```
+
+## Rituals
+
+- **Preset hand-off** — swap in art-direction presets while the live solver keeps its cache intact.
+- **Runtime inspection** — pipe solver metrics to the control panel widget for immediate validation.
+- **Export workflow** — trigger GLTF snapshots with constraint metadata for downstream review.
+
+## Field Notes
+
+The lattice viewer is wired to the observability spine so artists can bookmark interesting frames.
+Each bookmark attaches the active module preset, wind field, and performance metrics to support
+compliance evidence when the lab graduates into production.

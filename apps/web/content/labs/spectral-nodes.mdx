@@ -1,0 +1,49 @@
+---
+title: "Spectral Nodes"
+summary: "Node-based spectral composer with waveform inspectors and MDX-powered annotation stream."
+status: "Preview"
+templateId: "lab.spectral-nodes"
+styleTokens:
+  - "panel:spectrum"
+  - "accent:violet-laser"
+  - "bg:void-black"
+modulePresets:
+  - "spectrum-editor/v2"
+  - "waveform-inspector/beta"
+  - "annotation-stream/mdx-sync"
+featured: true
+homeOrder: 2
+tags:
+  - "Spectral"
+  - "Composer"
+  - "Realtime Collaboration"
+seoTitle: "Spectral Nodes Lab — Collaborative Spectrum Composer"
+seoDescription: "Test collaborative waveform authoring, annotation streams, and preset sharing with the Spectral Nodes lab on Website v1.1."
+---
+
+## Overview
+
+Spectral Nodes prototypes the annotation-powered composer described in the roadmap. Connect live
+inputs, blend spectral curves, and capture presets that sync back to the enablement repository. The
+annotation stream is rendered directly from MDX content so designers can embed code snippets and
+observability callouts without leaving the lab.
+
+```tsx
+<AnalyzerPanel
+  source="labs/spectral"
+  inspectors={["sine", "pulse", "saw"]}
+  annotations={annotationStream}
+/>
+```
+
+## Rituals
+
+- **Live collaboration** — every node edit emits diff payloads that the Builder Agent can translate into PRs.
+- **Preset curation** — maintain versioned banks of tone-mapping curves and share them with partner teams.
+- **Research lineage** — store waveform experiments with rich MDX annotations to maintain audit trails.
+
+## Field Notes
+
+The composer leans on the runtime's optimistic concurrency controls to keep multiple contributors in
+sync. When conflicts do occur, the AI assistant suggests merge strategies by replaying MDX snippets
+from similar labs and compliance reviews.
