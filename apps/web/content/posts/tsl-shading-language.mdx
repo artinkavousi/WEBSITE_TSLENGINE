@@ -1,0 +1,103 @@
+---
+title: "Mastering TSL: Three Shading Language"
+description: "Discover the power of TSL for creating advanced shaders in Three.js"
+date: 2025-11-12
+published: true
+tags: ["tsl", "shaders", "advanced"]
+author: "TSL-KIT Team"
+templateId: "GeometricShapes"
+styleId: "cinematic"
+sceneProps:
+  camera:
+    fov: 50
+    position: [0, 0, 5]
+  colors:
+    primary: "#ff006e"
+    secondary: "#00f5ff"
+  animation:
+    rotationSpeed: 1.0
+    morphSpeed: 1.5
+---
+
+# Mastering TSL: Three Shading Language
+
+TSL (Three Shading Language) is a powerful abstraction layer for creating complex shaders in Three.js with a type-safe, functional approach.
+
+## Why TSL?
+
+Traditional GLSL shaders are powerful but verbose. TSL provides:
+
+- **Type Safety**: Catch errors at compile time
+- **Composability**: Build complex shaders from simple functions
+- **Readability**: Cleaner, more maintainable code
+- **WebGPU Ready**: Works with both WebGL and WebGPU
+
+## Basic Example
+
+```typescript
+import { color, float, tslFn, uniform } from 'three/tsl';
+
+const myShader = tslFn(() => {
+  const time = uniform(0.0);
+  const baseColor = color('#ff006e');
+  
+  return baseColor.mul(float(Math.sin(time)));
+});
+```
+
+## Advanced Patterns
+
+### 1. Vertex Displacement
+
+```typescript
+const waveDisplacement = tslFn((inputs) => {
+  const { position, normal, time, frequency, amplitude } = inputs;
+  
+  const offset = position.x
+    .mul(frequency)
+    .add(time)
+    .sin()
+    .mul(amplitude);
+  
+  return position.add(normal.mul(offset));
+});
+```
+
+### 2. Custom Materials
+
+```typescript
+material.onBuild = (shader) => {
+  shader.vertex.position = waveDisplacement({
+    position: shader.vertex.position,
+    normal: shader.vertex.normal,
+    time: uniform(time),
+    frequency: uniform(5.0),
+    amplitude: uniform(0.1),
+  });
+};
+```
+
+### 3. Post-Processing
+
+```typescript
+const bloomPass = tslFn((color, intensity) => {
+  const bright = color.mul(intensity).max(0.0);
+  return bright.blur(5).add(color);
+});
+```
+
+## Best Practices
+
+1. **Cache uniforms**: Don't recreate on every frame
+2. **Use built-in nodes**: TSL provides many optimized operations
+3. **Profile performance**: Complex shaders can impact frame rate
+4. **Test on target devices**: Mobile GPUs have different capabilities
+
+## Resources
+
+- [TSL Documentation](https://threejs.org/docs/#api/en/nodes/Nodes)
+- [Example Gallery](/labs/materials)
+- [Community Shaders](/community)
+
+TSL makes shader programming accessible while maintaining the power of GLSL. Experiment and create! ✨
+

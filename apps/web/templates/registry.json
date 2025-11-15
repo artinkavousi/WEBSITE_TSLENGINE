@@ -1,0 +1,48 @@
+{
+  "HeroGlassWave": {
+    "component": "./HeroGlassWave.tsx",
+    "label": "Hero Glass Wave",
+    "description": "Glass sphere with wave distortion and refraction",
+    "category": "Hero",
+    "schemaKeys": ["camera", "lights", "shader", "animation"],
+    "thumbnail": "/og/hero-glass-wave.png",
+    "tags": ["glass", "waves", "hero", "refraction"]
+  },
+  "ParticleSwarm": {
+    "component": "./ParticleSwarm.tsx",
+    "label": "Particle Swarm",
+    "description": "Interactive particle field with forces and flocking",
+    "category": "Interactive",
+    "schemaKeys": ["camera", "lights", "particles", "forces"],
+    "thumbnail": "/og/particle-swarm.png",
+    "tags": ["particles", "interactive", "gpu", "forces"]
+  },
+  "FluidCanvas": {
+    "component": "./FluidCanvas.tsx",
+    "label": "Fluid Canvas",
+    "description": "2D fluid simulation with color mixing",
+    "category": "Simulation",
+    "schemaKeys": ["fluid", "colors", "interaction"],
+    "thumbnail": "/og/fluid-canvas.png",
+    "tags": ["fluid", "simulation", "2d", "interactive"]
+  },
+  "GeometricShapes": {
+    "component": "./GeometricShapes.tsx",
+    "label": "Geometric Shapes",
+    "description": "Animated SDF shapes with raymarching",
+    "category": "Abstract",
+    "schemaKeys": ["camera", "sdf", "colors", "animation"],
+    "thumbnail": "/og/geometric-shapes.png",
+    "tags": ["sdf", "raymarching", "abstract", "geometry"]
+  },
+  "EmissiveGrid": {
+    "component": "./EmissiveGrid.tsx",
+    "label": "Emissive Grid",
+    "description": "Neon grid with glow and pulse animation",
+    "category": "Background",
+    "schemaKeys": ["camera", "grid", "glow", "animation"],
+    "thumbnail": "/og/emissive-grid.png",
+    "tags": ["grid", "neon", "glow", "cyberpunk"]
+  }
+}
+

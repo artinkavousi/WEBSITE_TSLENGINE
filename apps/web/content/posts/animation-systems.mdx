@@ -1,0 +1,64 @@
+---
+title: "Building Smooth Animation Systems"
+description: "Create fluid animations with GSAP, easing functions, and state machines"
+date: 2025-11-05
+published: true
+tags: ["animation", "gsap", "interaction"]
+author: "TSL-KIT Team"
+templateId: "GeometricShapes"
+styleId: "retro"
+sceneProps:
+  animation:
+    rotationSpeed: 2.0
+    morphSpeed: 2.5
+---
+
+# Building Smooth Animation Systems
+
+Animation brings your scenes to life.
+
+## GSAP Integration
+
+```typescript
+import gsap from 'gsap';
+
+gsap.to(mesh.position, {
+  y: 2,
+  duration: 1,
+  ease: 'elastic.out(1, 0.5)',
+});
+```
+
+## Easing Functions
+
+- `power1/2/3/4`: Acceleration curves
+- `back`: Overshoot effect
+- `elastic`: Bouncy effect
+- `bounce`: Gravity bounce
+
+## State Machines
+
+```typescript
+const states = {
+  idle: { scale: 1.0 },
+  hover: { scale: 1.2 },
+  active: { scale: 0.9 },
+};
+
+function transition(to) {
+  gsap.to(object.scale, {
+    ...states[to],
+    duration: 0.3,
+  });
+}
+```
+
+## Performance Tips
+
+- Use `will-change` for GPU acceleration
+- Batch animations when possible
+- Avoid layout thrashing
+- Use `requestAnimationFrame`
+
+Animate with style! 🎨
+

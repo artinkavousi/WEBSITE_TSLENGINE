@@ -1,0 +1,52 @@
+---
+title: "Post-Processing Effects Guide"
+description: "Add cinematic polish with bloom, DOF, and color grading"
+date: 2025-11-09
+published: true
+tags: ["postfx", "effects", "rendering"]
+author: "TSL-KIT Team"
+templateId: "GeometricShapes"
+styleId: "cinematic"
+sceneProps:
+  animation:
+    rotationSpeed: 0.5
+---
+
+# Post-Processing Effects
+
+Transform your scenes with powerful post-processing.
+
+## Essential Effects
+
+### Bloom
+Adds glow to bright areas:
+```typescript
+bloom: {
+  strength: 0.8,
+  radius: 0.4,
+  threshold: 0.85
+}
+```
+
+### Depth of Field
+Simulates camera focus:
+```typescript
+dof: {
+  focusDistance: 5.0,
+  focalLength: 0.1,
+  bokehScale: 2.0
+}
+```
+
+### Color Grading
+Artistic color control:
+```typescript
+colorGrading: {
+  exposure: 1.0,
+  contrast: 1.1,
+  saturation: 1.2
+}
+```
+
+Make your scenes cinematic! 🎬
+

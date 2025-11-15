@@ -1,8 +1,21 @@
-PPGO
 check RESOURCES\REPOSITORIES
 specificly RESOURCES\REPOSITORIES\portfolio examples
 there is several working projects and repositories and webgpu pipeline  check them and find best approach to build our engine 
 anyof the items you choose i prefer direct port and use the same scripts from those projects and not create from begining oir reinventing them as they are already working project just adopt it for our goal  i prefer to keep it that way and not add unneccesserly issues and error and deal with those 
+
+ check 
+ RESOURCES\REPOSITORIES\portfolio examples
+ RESOURCES\REPOSITORIES\TSLwebgpuExamples
+ RESOURCES\THREEJS_TSL_knowladge_DOCS\THREEJSr181-DOCS.txt
+  RESOURCES\THREEJS_TSL_knowladge_DOCS\THREEJSr181-WEBGPU_EXAMPLES.txt
+  
+there is  several projects and examples and also threejs webgpu @examples and documentation with latest knowladge 
+and see and port any usefull script
+there is several working projects and repositories and webgpu pipeline  check them and find useful examples or nodes and tsl modules and scripts and  helpers and modules and effect and component  and such to port to our sdystem for more advance and better more pre build modules to use 
+so we want to continue build over that and adopt it to add and develope it more base on : 
+ 
+so analyze howe we can develope our prooject to match our goals and enhave and deve,lope it furthur and create best capable engine with everything all set and helpers and modules and effect and component all readty to go and this become part of our next plan for entire website 
+create a detail development and planning/todo documentations for it  
 
 so we want to continue build over that and adopt it to add and develope it more base on : 
  all conversations above and other and what what we have in mind to achieve  and  best approach  to achieve it first gonna focus of building  TSL kit webgpu engine  self-contained, plug-and-play **TSL/Node** toolkit on top of **Three.js WebGPU** that delivers cutting-edge noise fields,shaders,structures a, forms , PBR materials, realistic post-FX, and compute-powered effects and all other categories of node and TSL we can have pre desgined —plus clean APIs your in-app agent can target.Z 
@@ -258,20 +271,6 @@ Reason: prevents “**render() called before backend is initialized**” warning
 
 
 
-
- check 
- RESOURCES\REPOSITORIES\portfolio examples
- RESOURCES\REPOSITORIES\TSLwebgpuExamples
- RESOURCES\THREEJS_TSL_knowladge_DOCS\THREEJSr181-DOCS.txt
-  RESOURCES\THREEJS_TSL_knowladge_DOCS\THREEJSr181-WEBGPU_EXAMPLES.txt
-  
-there is  several projects and examples and also threejs webgpu @examples and documentation with latest knowladge 
-and see and port any usefull script
-there is several working projects and repositories and webgpu pipeline  check them and find useful examples or nodes and tsl modules and scripts and  helpers and modules and effect and component  and such to port to our sdystem for more advance and better more pre build modules to use 
-so we want to continue build over that and adopt it to add and develope it more base on : 
- 
-so analyze howe we can develope our prooject to match our goals and enhave and deve,lope it furthur and create best capable engine with everything all set and helpers and modules and effect and component all readty to go and this become part of our next plan for entire website 
-create a detail development and planning/todo documentations for it  
 
 
 

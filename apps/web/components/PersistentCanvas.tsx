@@ -1,24 +1,12 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
+import { useEngineStore } from '@/lib/store';
+import { createWebGPURenderer } from '@/lib/webgpu-renderer';
 import { OrbitControls, PerspectiveCamera, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ModuleRunner, bloomEffectModule, chromaticAberrationModule, curlNoiseModule, emissiveMaterialModule, fbmNoiseModule, helloCubeModule, iridescentMaterialModule, moduleRegistry, pbrMaterialModule, simplexNoiseModule, tslTestModule, tslWaveMaterialModule, vignetteEffectModule, voronoiNoiseModule } from '@tsl-kit/engine';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { createRenderer, ModuleRunner, moduleRegistry } from '@tsl-kit/engine';
-import { 
-  helloCubeModule,
-  pbrMaterialModule,
-  emissiveMaterialModule,
-  iridescentMaterialModule,
-  simplexNoiseModule,
-  curlNoiseModule,
-  voronoiNoiseModule,
-  fbmNoiseModule,
-  bloomEffectModule,
-  vignetteEffectModule,
-  chromaticAberrationModule,
-} from '@tsl-kit/engine';
-import { useEngineStore } from '@/lib/store';
 
 function Scene() {
   const sceneRef = useRef<THREE.Scene>(null);
@@ -36,32 +24,37 @@ function Scene() {
 
   // Register all modules once
   useEffect(() => {
-    // Register test modules
-    moduleRegistry.register(helloCubeModule);
-    
-    // Register material modules
-    moduleRegistry.register(pbrMaterialModule);
-    moduleRegistry.register(emissiveMaterialModule);
-    moduleRegistry.register(iridescentMaterialModule);
-    
-    // Register noise modules
-    moduleRegistry.register(simplexNoiseModule);
-    moduleRegistry.register(curlNoiseModule);
-    moduleRegistry.register(voronoiNoiseModule);
-    moduleRegistry.register(fbmNoiseModule);
-    
-    // Register post-fx modules
-    moduleRegistry.register(bloomEffectModule);
-    moduleRegistry.register(vignetteEffectModule);
-    moduleRegistry.register(chromaticAberrationModule);
+    // Only register if not already registered
+    if (!moduleRegistry.has('test/hello-cube')) {
+      // Register test modules
+      moduleRegistry.register(helloCubeModule);
+      moduleRegistry.register(tslTestModule);
+      
+      // Register material modules
+      moduleRegistry.register(pbrMaterialModule);
+      moduleRegistry.register(emissiveMaterialModule);
+      moduleRegistry.register(iridescentMaterialModule);
+      moduleRegistry.register(tslWaveMaterialModule);
+      
+      // Register noise modules
+      moduleRegistry.register(simplexNoiseModule);
+      moduleRegistry.register(curlNoiseModule);
+      moduleRegistry.register(voronoiNoiseModule);
+      moduleRegistry.register(fbmNoiseModule);
+      
+      // Register post-fx modules
+      moduleRegistry.register(bloomEffectModule);
+      moduleRegistry.register(vignetteEffectModule);
+      moduleRegistry.register(chromaticAberrationModule);
 
-    console.log(`✅ Registered ${moduleRegistry.size} modules`);
+      console.log(`✅ Registered ${moduleRegistry.size} modules (including TSL test)`);
+    }
 
     // Load default module if none active
     if (!activeModuleId) {
       selectModule('test/hello-cube', helloCubeModule.defaultParams);
     }
-  }, []);
+  }, [activeModuleId, selectModule]);
 
   // Initialize renderer and runner
   useEffect(() => {
@@ -71,13 +64,36 @@ function Scene() {
       if (!sceneRef.current) return;
 
       try {
-        // Create renderer
-        const { renderer, capabilities } = await createRenderer({
-          antialias: true,
-          alpha: false,
-          powerPreference: 'high-performance',
-          forceBackend: backend === 'auto' ? undefined : backend,
-        });
+        // Try WebGPU renderer first (client-side only)
+        let renderer: any;
+        let capabilities: any;
+        
+        try {
+          const result = await createWebGPURenderer();
+          renderer = result.renderer;
+          capabilities = result.capabilities;
+        } catch (webgpuError) {
+          // Fallback to WebGL if WebGPU fails
+          console.warn('⚠️ WebGPU failed, falling back to WebGL:', webgpuError);
+          renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: false,
+            powerPreference: 'high-performance',
+          });
+          renderer.outputColorSpace = THREE.SRGBColorSpace;
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.0;
+          
+          const gl = renderer.getContext();
+          capabilities = {
+            backend: 'webgl',
+            computeShaders: false,
+            storageBuffers: false,
+            maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+            maxWorkgroupSize: [0, 0, 0],
+          };
+          console.log('✅ WebGL renderer initialized (fallback)');
+        }
 
         if (!mounted) {
           renderer.dispose();
@@ -151,7 +167,15 @@ function Scene() {
     }
 
     loadModule();
-  }, [isReady, activeModuleId, moduleParams, getParam, setParam]);
+  }, [isReady, activeModuleId, getParam, setParam]);
+
+  // Update module params in real-time (without reloading)
+  useEffect(() => {
+    if (!isReady || !runnerRef.current || !activeModuleId) return;
+    
+    // Update params without reloading
+    runnerRef.current.setParams(moduleParams);
+  }, [isReady, activeModuleId, moduleParams]);
 
   // Update loop
   useEffect(() => {

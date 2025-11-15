@@ -1,0 +1,100 @@
+---
+title: "Building GPU Particle Systems"
+description: "Learn how to create massive particle systems using WebGPU compute shaders"
+date: 2025-11-13
+published: true
+tags: ["webgpu", "particles", "compute"]
+author: "TSL-KIT Team"
+templateId: "ParticleSwarm"
+styleId: "neon"
+sceneProps:
+  camera:
+    fov: 60
+    position: [0, 0, 8]
+  particles:
+    count: 50000
+    size: 0.02
+    color: "#00ffcc"
+    speed: 1.0
+  forces:
+    - type: "vortex"
+      strength: 2.0
+---
+
+# Building GPU Particle Systems
+
+GPU particle systems can simulate millions of particles with realistic physics, all running at 60 FPS. Here's how to build one with WebGPU.
+
+## The Power of Compute Shaders
+
+Traditional CPU particle systems are limited to thousands of particles. WebGPU compute shaders can handle millions:
+
+```wgsl
+@compute @workgroup_size(256)
+fn main(@builtin(global_invocation_id) id: vec3<u32>) {
+  let idx = id.x;
+  if (idx >= arrayLength(&particles)) { return; }
+  
+  var particle = particles[idx];
+  
+  // Update position
+  particle.position += particle.velocity * deltaTime;
+  
+  // Apply forces
+  let force = calculateForce(particle.position);
+  particle.velocity += force * deltaTime;
+  
+  particles[idx] = particle;
+}
+```
+
+## Architecture
+
+### 1. Particle Data Structure
+
+```typescript
+struct Particle {
+  position: vec3<f32>,
+  velocity: vec3<f32>,
+  color: vec4<f32>,
+  life: f32,
+}
+```
+
+### 2. Storage Buffers
+
+```typescript
+const particleBuffer = device.createBuffer({
+  size: particleCount * particleSize,
+  usage: GPUBufferUsage.STORAGE | GPUBufferUsage.VERTEX,
+});
+```
+
+### 3. Compute Pipeline
+
+```typescript
+const computePipeline = device.createComputePipeline({
+  layout: 'auto',
+  compute: {
+    module: computeShaderModule,
+    entryPoint: 'main',
+  },
+});
+```
+
+## Performance Tips
+
+1. **Use workgroups efficiently**: 256 threads per workgroup is optimal
+2. **Minimize memory transfers**: Keep data on GPU
+3. **Use indirect draw**: Avoid CPU readback
+4. **Batch updates**: Update all particles in one pass
+
+## Advanced Techniques
+
+- **Spatial hashing** for collision detection
+- **Force fields** for environmental effects
+- **Particle trails** with history buffers
+- **Texture atlases** for variety
+
+Try the interactive demo above to see it in action! 🎆
+

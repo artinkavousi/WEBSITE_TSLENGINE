@@ -482,6 +482,90 @@ Use this for each module:
 **Committed:** [commit hash]
 ```
 
+## 📁 Source Repository Index
+
+| Repository | Path | Focus | Primary Use Cases |
+| --- | --- | --- | --- |
+| **fragments-boilerplate-main** | `RESOURCES/REPOSITORIES/portfolio examples/fragments-boilerplate-main` | Canonical WebGPU/TSL helpers (noise, SDF, post-FX) | Phase 1-2 math + post-processing ports |
+| **portfolio-main** | `RESOURCES/REPOSITORIES/portfolio examples/portfolio-main` | Production WebGPU labs (compute particles, flows, lighting) | Phase 2-3 compute + advanced lighting |
+| **TSLwebgpuExamples** | `RESOURCES/REPOSITORIES/TSLwebgpuExamples` | Stand-alone demos (fluids, raymarching, particles, SSR/SSGI) | Phase 3-6 physics, advanced FX, raymarch |
+| **tsl-textures-main** | `RESOURCES/REPOSITORIES/portfolio examples/tsl-textures-main` | Procedural textures + pattern library | Phase 4-6 procedural materials/patterns |
+| **three.js-r181** | `RESOURCES/three.js-r181` | Vanilla reference for nodes + renderer APIs | Validation of imports + WebGPU API surface |
+
+> Keep this table updated whenever a new upstream repository is cloned into `RESOURCES/REPOSITORIES/`.
+
+---
+
+## 🔗 Shared Utility Modules to Port First
+
+1. **Module Registry Helpers**  
+   - **Source:** `fragments-boilerplate-main/src/tsl/utils/module.js`  
+   - **Target:** `packages/tsl-kit/src/core/registryHelpers.ts`  
+   - **Reason:** Normalizes registration boilerplate used by most imported modules.
+
+2. **Parameter Schema Builders**  
+   - **Source:** `portfolio-main/src/utils/schema/controls.ts`  
+   - **Target:** `packages/tsl-kit/src/core/schema/controls.ts`  
+   - **Reason:** Used by LABS + admin UI; keeps slider definitions consistent.
+
+3. **Buffer & Texture Pools**  
+   - **Source:** `portfolio-main/src/utils/webgpu/bufferPool.ts`  
+   - **Target:** `packages/tsl-kit/src/rendering/resources/bufferPool.ts`  
+   - **Reason:** Required before compute simulators (Phases 3-5) can share GPU memory.
+
+4. **Renderer Adapters**  
+   - **Source:** `TSLwebgpuExamples/three-pinata-main/lib/src/core/RendererController.ts`  
+   - **Target:** `packages/tsl-kit/src/rendering/controllers/rendererController.ts`  
+   - **Reason:** Abstracts WebGPU/WebGL fallback; needed as soon as labs integrate dynamic modules.
+
+Document these foundational ports in the Phase 1 tracker so downstream module owners can assume a stable API.
+
+---
+
+## 🧪 Validation Checklist by Module Type
+
+| Module Type | Minimal Tests | Additional QA Hooks |
+| --- | --- | --- |
+| **Math / Noise** | Vitest snapshot against known seeds; ensures determinism | Add LABS plot comparing CPU vs GPU noise |
+| **Post-FX** | Visual regression via Playwright screenshot diff (`apps/web/.playwright-mcp/*`) | Performance budget (<0.5 ms @ 1440p) recorded in docs |
+| **Materials** | Render sphere + plane scenes, compare shading to source repo | Shader lint + reflection probe sanity check |
+| **Particles / Compute** | Headless step test (100 frames) to ensure buffers stay bounded | GPU memory telemetry export for admin dashboard |
+| **Physics / Fluids** | Deterministic seeds for 60-frame capture; evaluate stability | Profiling run logged in `LABS/materials/*.mdx` |
+| **Raymarch / Fields** | Signed distance evaluations vs expected iso-values | Tweakpane schema verifying every exposed parameter |
+
+Check these boxes inside each module's tracking entry before flipping the status to ✅ Complete.
+
+---
+
+## 📆 Phase Readiness Checklist
+
+| Phase | Prerequisites | What to Verify Before Starting |
+| --- | --- | --- |
+| 🔥 Phase 1 | `RESEARCH/README.md` todos, `TSLENGINE/plans/phase-todos.md` | Research docs created, foundational utilities (below) assigned |
+| 🟡 Phase 2 | Noise/SDF/math packages merged, CI green | Module registry helpers + schema builders live; `packages/tsl-kit` exports versioned |
+| 🟢 Phase 3 | Renderer adapters + buffer pools merged, LABS smoke scene working | GPU telemetry + headless tests wired into `pnpm test` |
+| 🔵 Phase 4 | Procedural + lighting APIs stable, admin UI reading schemas | Contentlayer + CMS ingestion ready to showcase new materials |
+| 🟣 Phase 5 | Physics test harness + profiling docs drafted | Compute budget + memory pool instrumentation committed |
+| ⚫ Phase 6 | Website + AI assistants feature-complete | Regression suite + screenshot baselines captured in `.playwright-mcp/` |
+
+Gate every kickoff with a quick review of this table so downstream work does not block on missing infrastructure.
+
+---
+
+## 🗂️ Module Claim Workflow
+
+1. **Claim** — Add your name + status emoji beside the row in this document (or cross-link to an issue).  
+2. **Branch** — `git checkout -b feat/phaseX/<module-name>` to keep refs consistent.  
+3. **Port & Test** — Follow the workflow template above, ensuring Vitest + LABS checks are run locally.  
+4. **Document** — Update the relevant section (e.g., `PORT_MAPPING.md`, `TSLENGINE/plans/phase-todos.md`, LABS doc).  
+5. **Review** — Open a PR with links to screenshots/recordings and the updated tracker row.  
+6. **Merge & Tag** — After approval, merge and increment `packages/tsl-kit` version if the public API changed.
+
+This cycle keeps module ownership visible and ties every PR back to the planning artifacts.
+
+---
+
+
 ---
 
 **End of Port Mapping**

@@ -1,0 +1,66 @@
+---
+title: "Real-Time Fluid Simulation on the GPU"
+description: "Implement beautiful fluid dynamics using WebGPU compute shaders"
+date: 2025-11-11
+published: true
+tags: ["simulation", "gpu", "fluid"]
+author: "TSL-KIT Team"
+templateId: "FluidCanvas"
+styleId: "neon"
+sceneProps:
+  fluid:
+    resolution: 128
+    viscosity: 0.0001
+    diffusion: 0.0001
+  colors:
+    primary: "#ff00ff"
+    secondary: "#00ffff"
+---
+
+# Real-Time Fluid Simulation
+
+Create mesmerizing fluid effects that run entirely on the GPU at 60 FPS.
+
+## Navier-Stokes Equations
+
+The foundation of fluid simulation:
+
+```
+∂u/∂t = -(u·∇)u - ∇p/ρ + ν∇²u + f
+```
+
+## Implementation
+
+### Velocity Advection
+
+```wgsl
+@compute @workgroup_size(8, 8)
+fn advect(@builtin(global_invocation_id) id: vec3<u32>) {
+  let coord = vec2<f32>(id.xy);
+  let vel = velocity[coord];
+  
+  // Backtrace
+  let prev = coord - vel * dt;
+  
+  // Bilinear interpolation
+  velocity_out[coord] = sample(prev);
+}
+```
+
+### Pressure Solve
+
+```wgsl
+// Jacobi iteration
+for (var i = 0; i < iterations; i++) {
+  let neighbors = 
+    pressure[left] +
+    pressure[right] +
+    pressure[top] +
+    pressure[bottom];
+  
+  pressure_out[coord] = (neighbors - divergence[coord]) * 0.25;
+}
+```
+
+Start creating stunning fluid art! 🌊
+

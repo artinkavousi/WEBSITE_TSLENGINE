@@ -1,0 +1,55 @@
+---
+title: "Procedural Noise Functions"
+description: "Generate infinite variety with Perlin, Simplex, and Voronoi noise"
+date: 2025-11-08
+published: true
+tags: ["noise", "procedural", "math"]
+author: "TSL-KIT Team"
+templateId: "EmissiveGrid"
+styleId: "neon"
+sceneProps:
+  glow:
+    color: "#00ffcc"
+    pulseSpeed: 1.5
+---
+
+# Procedural Noise Functions
+
+Noise functions are the foundation of procedural generation.
+
+## Types of Noise
+
+### Simplex Noise
+```glsl
+float noise(vec3 p) {
+  // Ken Perlin's improved noise
+  return simplexNoise(p);
+}
+```
+
+### Voronoi
+```glsl
+vec2 voronoi(vec2 p) {
+  vec2 cell = floor(p);
+  float minDist = 1.0;
+  for(int i = -1; i <= 1; i++) {
+    for(int j = -1; j <= 1; j++) {
+      vec2 neighbor = cell + vec2(i,j);
+      vec2 point = random2(neighbor);
+      float dist = length(point - fract(p));
+      minDist = min(minDist, dist);
+    }
+  }
+  return vec2(minDist);
+}
+```
+
+## Applications
+
+- Terrain generation
+- Cloud rendering
+- Texture synthesis
+- Procedural details
+
+Create infinite worlds! 🌍
+

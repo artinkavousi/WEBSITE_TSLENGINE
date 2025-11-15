@@ -1,0 +1,41 @@
+---
+title: "Understanding PBR Materials"
+description: "Master physically-based rendering for realistic materials"
+date: 2025-11-10
+published: true
+tags: ["pbr", "materials", "rendering"]
+author: "TSL-KIT Team"
+templateId: "HeroGlassWave"
+styleId: "cinematic"
+sceneProps:
+  shader:
+    baseColor: "#888888"
+    metalness: 0.9
+    roughness: 0.1
+---
+
+# Understanding PBR Materials
+
+Physically-Based Rendering (PBR) creates realistic materials by simulating light physics.
+
+## Key Parameters
+
+- **Albedo**: Base color
+- **Metalness**: 0=dielectric, 1=metal
+- **Roughness**: 0=mirror, 1=matte
+- **Normal**: Surface details
+
+## Material Types
+
+### Metals
+```typescript
+{ metalness: 1.0, roughness: 0.1 }
+```
+
+### Dielectrics
+```typescript
+{ metalness: 0.0, roughness: 0.5 }
+```
+
+Create photorealistic materials! ✨
+

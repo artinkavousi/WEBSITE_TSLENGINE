@@ -1,0 +1,47 @@
+---
+title: "Advanced Lighting Techniques"
+description: "Master IBL, shadows, and light baking for stunning visuals"
+date: 2025-11-06
+published: true
+tags: ["lighting", "rendering", "advanced"]
+author: "TSL-KIT Team"
+templateId: "HeroGlassWave"
+styleId: "nature"
+sceneProps:
+  lights:
+    ambient: 0.3
+    directional:
+      intensity: 1.5
+---
+
+# Advanced Lighting Techniques
+
+Lighting makes or breaks visual quality.
+
+## Image-Based Lighting
+
+```typescript
+const hdrLoader = new RGBELoader();
+const envMap = await hdrLoader.loadAsync('studio.hdr');
+scene.environment = envMap;
+```
+
+## Shadow Mapping
+
+```typescript
+light.castShadow = true;
+light.shadow.mapSize.width = 2048;
+light.shadow.mapSize.height = 2048;
+light.shadow.camera.near = 0.5;
+light.shadow.camera.far = 50;
+```
+
+## Light Types
+
+- **Directional**: Sunlight
+- **Point**: Light bulbs
+- **Spot**: Flashlights
+- **Area**: Soft lighting
+
+Light it up! 💡
+

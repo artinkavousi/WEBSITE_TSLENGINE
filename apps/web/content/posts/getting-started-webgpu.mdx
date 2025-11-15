@@ -1,0 +1,96 @@
+---
+title: "Getting Started with WebGPU"
+description: "Learn the basics of WebGPU and how to create your first GPU-accelerated graphics"
+date: 2025-11-14
+published: true
+tags: ["webgpu", "tutorial", "beginners"]
+author: "TSL-KIT Team"
+templateId: "HeroGlassWave"
+styleId: "neon"
+sceneProps:
+  camera:
+    fov: 45
+    position: [0, 0, 5]
+  lights:
+    ambient: 0.5
+    directional:
+      position: [5, 5, 5]
+      intensity: 1
+  shader:
+    baseColor: "#34d399"
+    transmission: 0.95
+    roughness: 0.05
+  animation:
+    rotationSpeed: 0.3
+    pulseSpeed: 1.0
+---
+
+# Getting Started with WebGPU
+
+WebGPU is the next generation graphics API for the web, providing direct access to modern GPU capabilities with better performance and more features than WebGL.
+
+## Why WebGPU?
+
+- **Better Performance**: Lower overhead and more efficient GPU usage
+- **Modern Features**: Compute shaders, storage buffers, and advanced rendering techniques
+- **Future-Proof**: Designed for modern GPUs and architectures
+
+## Your First WebGPU Scene
+
+```typescript
+import { createRenderer } from '@tsl-kit/engine';
+
+// Create a WebGPU renderer
+const { renderer, capabilities } = await createRenderer({
+  canvas: document.querySelector('canvas'),
+  antialias: true,
+});
+
+console.log('Backend:', capabilities.backend); // 'webgpu'
+```
+
+## Key Concepts
+
+### 1. Pipeline State
+
+WebGPU uses explicit pipeline state objects, making rendering more efficient:
+
+```typescript
+const pipeline = device.createRenderPipeline({
+  vertex: { module: vertexShader, entryPoint: 'main' },
+  fragment: { module: fragmentShader, entryPoint: 'main' },
+  primitive: { topology: 'triangle-list' },
+});
+```
+
+### 2. Command Buffers
+
+All GPU commands are recorded into command buffers:
+
+```typescript
+const commandEncoder = device.createCommandEncoder();
+const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+passEncoder.setPipeline(pipeline);
+passEncoder.draw(3);
+passEncoder.end();
+device.queue.submit([commandEncoder.finish()]);
+```
+
+### 3. Compute Shaders
+
+One of WebGPU's most powerful features:
+
+```typescript
+const computePipeline = device.createComputePipeline({
+  compute: { module: computeShader, entryPoint: 'main' },
+});
+```
+
+## Next Steps
+
+- Explore our module library
+- Try the interactive examples
+- Read the TSL shader guide
+
+WebGPU opens up a world of possibilities for web graphics. Let's build something amazing! 🚀
+
