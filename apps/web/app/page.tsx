@@ -9,6 +9,9 @@ import LabsShowcase from "../components/LabsShowcase";
 import LaunchChecklist from "../components/LaunchChecklist";
 import ModuleShowcase from "../components/ModuleShowcase";
 import AdoptionSpotlight from "../components/AdoptionSpotlight";
+import ObservabilitySuite from "../components/ObservabilitySuite";
+import PerformanceBenchmarks from "../components/PerformanceBenchmarks";
+import CommunitySpotlight from "../components/CommunitySpotlight";
 import OperationsPlaybooks from "../components/OperationsPlaybooks";
 import SecurityPosture from "../components/SecurityPosture";
 import ComplianceMatrix from "../components/ComplianceMatrix";
@@ -33,12 +36,15 @@ export default function HomePage() {
           <IntegrationMatrix />
           <ControlPanelShowcase />
           <AIAssistants />
+          <ObservabilitySuite />
           <OperationsPlaybooks />
           <SecurityPosture />
           <ComplianceMatrix />
+          <PerformanceBenchmarks />
           <AdoptionSpotlight />
           <EnablementPrograms />
           <PartnerEcosystem />
+          <CommunitySpotlight />
           <Roadmap />
           <LaunchChecklist />
           <FAQ />
